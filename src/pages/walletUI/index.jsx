@@ -42,6 +42,8 @@ function index() {
 		} 
 		updateUser()
 	}, [isDataUpdated]);
+
+	console.log(user)
 	
 	return (
 		<>
@@ -74,7 +76,7 @@ function index() {
                             <WalletInsightCard
 							insightIcon={<FaSackDollar  />}
 							insightTitle={'USDT Balance'}
-							insightFigure={`$${"0.00"}`}
+							insightFigure={`$${currencyConverter(user.usdtWalletBallance) || "0.00"}`}
 							pendingInsightTitle={'pending balance'}
 							pendingInsightFigure={'$0.00'} />
                         </div>

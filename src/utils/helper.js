@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export function currencyConverter (amount) {
-    return Number(amount).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return Number(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
  
 
