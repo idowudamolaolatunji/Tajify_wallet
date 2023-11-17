@@ -14,6 +14,8 @@ import AvatarImg from '../../assets/imgs/pngs/avatar.png'
 import "./main.css";
 import "../../assets/css/table.css";
 
+// https://res.cloudinary.com/dy3bwvkeb/image/upload/v1700175346/jassir-jonis-QWa0TIUW638-unsplash_mupxsr.jpg
+
 
 function index() {
 	const { user, token, handleUser } = useAuthContext();
@@ -43,8 +45,6 @@ function index() {
 		updateUser()
 	}, [isDataUpdated]);
 
-	console.log(user)
-	
 	return (
 		<>
 			<MainGreenHeader />
@@ -55,7 +55,8 @@ function index() {
 						<span className="wallet--profile-image">
 							<img src={user.image || AvatarImg} alt={user.image || AvatarImg} />
 						</span>
-						<a href="https://tajify.com/profile" className="wallet--profile-btn"><FaUserPen style={{ fontSize: "1.6rem" }} /> View Profile</a>
+						{/* <a href="https://tajify.com/profile" className="wallet--profile-btn"><FaUserPen style={{ fontSize: "1.6rem" }} /> My Profile</a> */}
+						<a href="https://tajify.com/profile" className="wallet--profile-btn"> My Profile</a>
 					</div>
 
 					<div className="wallet--cards wallet">
@@ -86,7 +87,6 @@ function index() {
 				</div>
 
 				<div className="wallet__bottom">
-
 					<span>
 						<h3 className="wallet--heading">Transactions History</h3>
 						<div className="wallet--tabs">

@@ -76,7 +76,7 @@ function DashboardTable({ activeModalTab, isDataUpdated }) {
             { activeModalTab === 'withdrawal' && <tbody>
                 {withdrawalTransactions.length > 0 && withdrawalTransactions.map((withdrawal) => {
                     return (
-                        <TableRow key={withdrawal.reference} currency={withdrawal.currency} amount={`${withdrawal.currency === 'naira' ? '₦' : withdrawal.currency === 'taji' ? 'TAJI ' : '$'} ${currencyConverter(withdrawal.amount)}`} status={withdrawal.status} reference={withdrawal.reference} date={withdrawal.updatedAt || withdrawal.createAt} />
+                        <TableRow key={withdrawal.reference} currency={withdrawal.currency} amount={`${withdrawal.currency === 'naira' ? '₦' : withdrawal.currency === 'taji' ? 'TAJI ' : '$'} ${currencyConverter(withdrawal.amount)}`} status={withdrawal.status} reference={withdrawal.reference} date={dateConverter(withdrawal?.updatedAt || withdrawal.createAt)} />
                     )
                 } )}
             </tbody> }

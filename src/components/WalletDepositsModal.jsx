@@ -11,14 +11,11 @@ import { MdContentCopy } from "react-icons/md";
 import AlertPopup from "./AlertPopup";
 import "../assets/css/custom.css";
 
-const formStyle = {
-	width: "50rem",
-    height: '45rem',
-};
+
 const timeout = 3500;
+let charges;
 
 const calcTotalAmount = function (amount) {
-	let charges;
 	const calcChargesAmount = (3 / 100) * amount;
 	if (calcChargesAmount > 3000) {
 		charges = 3000;
@@ -100,23 +97,24 @@ function WalletPaymentModal({ onUpdate }) {
 
     async function handleNairaDeposit(reference) {
         try {
-            // const res = await fetch(`https://api.tajify.com/api/wallets/payment-verification/${reference}`);
-            const res = await fetch(`http://127.0.0.1:3005/api/wallets/payment-verification/${reference}`, {
+            setIsLoading(true)
+            const res = await fetch(`http://127.0.0.1:3005/api/wallets/payment-verification/${reference}/${charges}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(res)
             if(!res.ok) {
+                setIsLoading(false)
                 return handleFailure();
             }
             const data = await res.json();
             console.log(data)
 
-            if(data.data.status === 'success') {
+            if(data.status === 'success') {
                 setIsLoading(false);
+                onUpdate(true);
                 handleSuccess();
             }
             setIsSuccessful(true);
@@ -149,8 +147,8 @@ function WalletPaymentModal({ onUpdate }) {
 
             if(data.status === 'success') {
                 setIsLoading(false);
+                onUpdate(true);
                 handleSuccess();
-                onUpdate(true)
             }
             setIsSuccessful(true);
         } catch(err) {
@@ -268,7 +266,7 @@ function WalletPaymentModal({ onUpdate }) {
                                             TAJI amount
                                         </label>
                                         <CurrencyInput
-                                            id="amount"
+                                            id="taji-amount"
                                             required
                                             className="form__input"
                                             placeholder="Enter Taji Amount"
@@ -293,6 +291,10 @@ function WalletPaymentModal({ onUpdate }) {
                                     </div>
                                 </form>
                             )}
+
+                            {activeModalTab === "usdt" && (
+                                <p>Coming Soon..</p>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -309,6 +311,7 @@ function WalletPaymentModal({ onUpdate }) {
                 <AlertPopup alertType={"success"}>
                     <AiFillCheckCircle className="alert--icon" />
                     <p>
+                        {onUpdate(false)}
                         {activeModalTab === 'naira' ? `Deposit of ₦${amount} Successful!` : activeModalTab === 'taji' ? `Deposit of TAJI ${tajiAmount} Successful, Await Confirmation!` : `Deposit of $${'0'} Successful!`}
                     </p>
                 </AlertPopup>
@@ -317,7 +320,10 @@ function WalletPaymentModal({ onUpdate }) {
             {showFailedAlert && (
                 <AlertPopup alertType={"error"}>
                     <AiFillExclamationCircle className="alert--icon" />
-                    <p>Transaction Not Completed{activeModalTab === 'taji' ? ', Enter Correct Hash' : ''}!</p>
+                    <p>
+                        {onUpdate(false)}
+                        Transaction Not Completed{activeModalTab === 'taji' ? ', Enter Correct Hash' : ''}!
+                    </p>
                 </AlertPopup>
             )}
         </>

@@ -1,10 +1,13 @@
 import moment from 'moment';
 
+
+// CURRENCY CONVERTER / HELPER FORMATTER
 export function currencyConverter (amount) {
     return Number(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
  
 
+// DATE CONVERTER HELPER FUNCTION
 export function dateConverter(givenDate) {
     const currentDate = moment().startOf('day');
     const inputDate = moment(givenDate);

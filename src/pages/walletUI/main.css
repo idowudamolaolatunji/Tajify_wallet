@@ -40,7 +40,7 @@
     height: 100%;
 }
 .wallet--profile-btn:link, .wallet--profile-btn:visited {
-    padding: 1rem 1.6rem;
+    padding: 1.2rem 1.6rem;
     /* background-color: #ff0066;
     color: #fff; */
 
@@ -308,6 +308,7 @@
     border-radius: .6rem;
     border: 2px solid transparent;
     transition: all .35s;
+    text-align: right;
 }
 .wallet--cards.wallet div.wallet.insight:nth-child(1) {
     background-color: #d7ecd1e2;
@@ -337,6 +338,7 @@
 .wallet--cards.wallet div.wallet.insight:hover {
     transform: translateY(-.4rem) scale(1.05);
 }
+
 
 .status p {
     display: inline-block;
@@ -409,7 +411,8 @@
 .insight--infos {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
+    /* align-items: center; */
     gap: 1.6rem;
 }
 .insight--content.escrow {
