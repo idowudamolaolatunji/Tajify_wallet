@@ -17,10 +17,18 @@ function WalletActions({ onUpdate }) {
 	const [modalWithdrawal, setModalWithdrawal] = useState(false);
 	
 	function toggleDepositModal() {
-		setModalDeposit(!modalDeposit);
+		// setModalDeposit(!modalDeposit);
+		setModalDeposit(true);
 	}
 	function toggleWithdrawalModal() {
-		setModalWithdrawal(!modalWithdrawal);
+		// setModalWithdrawal(!modalWithdrawal);
+		setModalWithdrawal(true);
+	}
+	function handleDepositModalClose() {
+		setModalDeposit(false);
+	}
+	function handleWithdrawalModalClose() {
+		setModalWithdrawal(false);
 	}
 
 	return (
@@ -54,8 +62,8 @@ function WalletActions({ onUpdate }) {
 					<span>Stake</span>
 				</div>
 			</div>
-			{modalDeposit && <WalletDepositsModal onUpdate={onUpdate} />}
-			{modalWithdrawal && <WalletWithdrawalsModal onUpdate={onUpdate} />}
+			{modalDeposit && <WalletDepositsModal onUpdate={onUpdate} handleClose={handleDepositModalClose} />}
+			{modalWithdrawal && <WalletWithdrawalsModal onUpdate={onUpdate} handleClose={handleWithdrawalModalClose} />}
 
 		</>
 	);

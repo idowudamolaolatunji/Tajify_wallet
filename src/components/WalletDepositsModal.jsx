@@ -31,7 +31,7 @@ import Spinner from "./Spinner";
 import { useAuthContext } from "../context/AuthContext";
 
 
-function WalletPaymentModal({ onUpdate }) {
+function WalletPaymentModal({ onUpdate, handleClose }) {
     const { token } = useAuthContext();
     const [isLoading, setIsLoading] = useState(false)
     
@@ -47,7 +47,7 @@ function WalletPaymentModal({ onUpdate }) {
     const [hashKey, setHashKey] = useState('');
     const [tajiAmount, setTajiAmount] = useState('');
     
-    const [isOpen, setIsOpen] = useState(true)
+    // const [isOpen, setIsOpen] = useState(true)
     const [activeModalTab, setActiveModalTab] = useState('naira');
 
     const amountInKobo = calcTotalAmount(Number(amount)) * 100;
@@ -64,7 +64,7 @@ function WalletPaymentModal({ onUpdate }) {
     };
 
 	function handleCloseModal() {
-        setIsOpen(false);
+        handleClose();
 	}
 
     function handleActiveTab(tabName) {
@@ -160,7 +160,7 @@ function WalletPaymentModal({ onUpdate }) {
 
 	return (
         <>
-            {isOpen && isSuccessful === false && (
+            {isSuccessful === false && (
                 <div className="overlay">
                     <div className="modal">
                         <span className="modal--head">

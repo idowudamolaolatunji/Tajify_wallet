@@ -17,10 +17,10 @@ const formStyle = {
 
 const timeout = 3500;
 
-function WalletWithdrawalsModal({ onUpdate }) {
+function WalletWithdrawalsModal({ onUpdate, handleClose }) {
     const { token } = useAuthContext();
     const [isLoading, setIsLoading] = useState(false)
-    const [isOpen, setIsOpen] = useState(true)
+    // const [isOpen, setIsOpen] = useState(true)
     const [activeModalTab, setActiveModalTab] = useState('naira');
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -38,7 +38,7 @@ function WalletWithdrawalsModal({ onUpdate }) {
 
 
     function handleCloseModal() {
-        setIsOpen(false);
+        handleClose();
 	}
 
     function handleActiveTab(tabName) {
@@ -140,7 +140,7 @@ function WalletWithdrawalsModal({ onUpdate }) {
 
     return (
         <>
-            {isOpen && isSuccessful === false && (
+            {!isSuccessful && (
                 <div className="overlay">
                     <div className="modal" style={formStyle}>
                         <span className="modal--head">

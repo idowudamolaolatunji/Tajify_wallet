@@ -37,8 +37,6 @@ function DashboardTable({ activeModalTab, isDataUpdated }) {
 				const deposits = depositData.data.currentUserDepositsTransaxctions;
 				const withdrawals = withdrawalData.data.currentUserWithdrawalsTransaxctions;
                 setIsLoading(false)
-                // setDepositTransactions(prevDepo => [...prevDepo, ...deposits]);
-                // setWithdrawalTransactions(prevWithdr => [...prevWithdr, ...withdrawals]);
                 setDepositTransactions(deposits);
                 setWithdrawalTransactions(withdrawals);
             } catch (err) {
