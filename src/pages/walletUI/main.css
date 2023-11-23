@@ -430,3 +430,132 @@
     background-color: #d7ecd1e2;
 }
 
+
+
+/*  */
+.payment--heading {
+    /* margin: -1.2rem 0 1rem; */
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: #ff0066;
+}
+.form--insights {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+.form--insight {
+    border-radius: .6rem;
+    padding: 1.6rem;
+    border: 1.2px solid #eee;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.2rem;
+    transition: all .35s;
+}
+.form--insight.invalid-task {
+    border-color: red;
+    animation: invalid-task .45s ease-in-out;
+}
+@keyframes invalid-task {
+    0% {
+        transform: rotate(0deg);
+    } 25% {
+        transform: rotate(45deg);
+    } 50% {
+        transform: rotate(-45deg);
+    } 100% {
+        transform: rotate(0deg);
+    }
+}
+.form--insight:hover {
+    box-shadow: .2rem 1rem 4rem rgba(0, 0, 0, .1);
+    transform: scale(1.05);
+}
+.form--insight-icon {
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 50%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-icon {
+    font-size: 2rem;
+}
+.form--insight:nth-child(1)
+.form--insight-icon {
+    background-color: #d7ecd1e2;
+}
+.form--insight:nth-child(2) 
+.form--insight-icon {
+    background-color: #ffe0cfe2;
+}
+
+.form--insight:nth-child(1) .form-icon {
+    color: #008001;
+}
+.form--insight:nth-child(2) .form-icon {
+    color: #ff9248;
+}
+
+.form--insight-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    color: #444;
+}
+.form--insight p:nth-child(1) {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.form--insight p:nth-child(2) {
+    font-size: 1.8rem;
+    color: #777;
+}
+/* .form__item .form--flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} */
+.form--total {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: 1.2rem;
+    color: #777;
+}
+.form--total p {
+    font-size: 1.1rem;
+    color: #008001;
+}
+
+/*  */
+.form--dotted {
+    margin: 1.2rem 0 .8rem;
+    border-top: 2.4px dashed #eee;
+    border-bottom: 2.4px dashed #eee;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1.4rem 0;
+}
+.dotted--title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ff9248;
+}
+.dotted--detail {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #777;
+}

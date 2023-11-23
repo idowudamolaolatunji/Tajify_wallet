@@ -21,9 +21,14 @@ function index() {
 	const { user, token, handleUser } = useAuthContext();
     const [activeModalTab, setActiveModalTab] = useState('deposit');
 	const [isDataUpdated, setIsDataUpdated] = useState(false);
+	const [userSlots, setUserSlots] = useState([])
 
 	function onUpdate(data) {
 		setIsDataUpdated(data);
+	}
+
+	function getSlots(slots) {
+		setUserSlots(slots);
 	}
 
 	useEffect(() => {
@@ -82,21 +87,25 @@ function index() {
 							pendingInsightFigure={'$0.00'} />
                         </div>
                             
-                        <WalletActions onUpdate={onUpdate} />
+                        <WalletActions onUpdate={onUpdate} userSlots={userSlots} />
 					</div>
 				</div>
 
 				<div className="wallet__bottom">
 					<span>
 						<h3 className="wallet--heading">Transactions History</h3>
+
 						<div className="wallet--tabs">
 							<span className={`wallet--tab ${activeModalTab === "deposit" && "tab--active"}`} onClick={() => { setActiveModalTab("deposit")}}>Deposit</span>
 
 							<span className={`wallet--tab ${activeModalTab === "withdrawal" && "tab--active"}`} onClick={() => { setActiveModalTab("withdrawal")}}>Withdrawal</span>
+							
+							<span className={`wallet--tab ${activeModalTab === "staking" && "tab--active"}`} onClick={() => { setActiveModalTab("staking")}}>Staking</span>
 						</div>
+
 					</span>
 					
-					<DashboardTable activeModalTab={activeModalTab} isDataUpdated={isDataUpdated} />
+					<DashboardTable getSlots={getSlots} activeModalTab={activeModalTab} isDataUpdated={isDataUpdated} />
 				</div>
 			</div>
 

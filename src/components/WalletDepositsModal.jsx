@@ -39,6 +39,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
     const [showCopiedAlert, setShowCopiedAlert] = useState(false)
     const [showFailedAlert, setShowFailedAlert] = useState(false);
     const [isSuccessful, setIsSuccessful] = useState(false);
+    const [statusCode, setStatusCode] = useState('');
 
     const publicKey = "pk_test_8fa5be5a113286b23f7775fe7f34c94ffd338c8c"
     const [fullName , setFullName] = useState('')
@@ -95,6 +96,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
         setIsSuccessful(true)
     }
 
+
     async function handleNairaDeposit(reference) {
         try {
             setIsLoading(true)
@@ -129,7 +131,6 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
             e.preventDefault();
             setIsLoading(true);
 
-            // const res = await fetch('https://api.tajify.com/api/wallets/deposit-taji', {
             const res = await fetch('http://127.0.0.1:3005/api/wallets/deposit-taji', {
                 method: 'POST',
                 headers: {
@@ -138,6 +139,12 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                 },
                 body: JSON.stringify({ amount: tajiAmount, transactionHash: hashKey }),
             });
+            if(res.status === 500) {
+                setIsLoading(false);
+                setStatusCode('500');
+                return handleFailure();
+            }
+            console.log(res)
             if(!res.ok) {
                 setIsLoading(false);
                 return handleFailure();
@@ -226,7 +233,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                                         />
 
                                     </div>
-                                    {fullName.trim() !== '' && email.trim() !== '' && amount.trim() !== '' ?
+                                    {(fullName !== '' && email !== '' && amount !== '') ?
 
                                         <div className="form__item">
                                             <PaystackButton className="form__submit" {...componentProps} />
@@ -322,7 +329,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                     <AiFillExclamationCircle className="alert--icon" />
                     <p>
                         {onUpdate(false)}
-                        Transaction Not Completed{activeModalTab === 'taji' ? ', Enter Correct Hash' : ''}!
+                        Transaction Not Completed{activeModalTab === 'taji' && statusCode === '500' ? ', Server Timeout' : activeModalTab === 'taji' ? ', Enter Correct Hash' : ''}!
                     </p>
                 </AlertPopup>
             )}
