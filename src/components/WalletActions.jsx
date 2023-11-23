@@ -15,7 +15,7 @@ import WalletDepositsModal from "./WalletDepositsModal";
 import WalletWithdrawalsModal from "./WalletWithdrawalsModal";
 import WalletStakingModal from "./WalletStakingModal";
 
-function WalletActions({ onUpdate }) {
+function WalletActions({ onUpdate, userSlots }) {
 	const [modalDeposit, setModalDeposit] = useState(false);
 	const [modalWithdrawal, setModalWithdrawal] = useState(false);
 	const [modalConvert, setModalConvert] = useState(false);

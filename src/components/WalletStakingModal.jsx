@@ -18,7 +18,9 @@ const formStyle = {
     height: 'auto',
 };
 
-const timeout = 3000;
+const timeout = 3000
+const timeoutError = 2500;
+
 const slotPrice = 20000;
 
 function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
@@ -46,7 +48,9 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
 		setShowFailedAlert(true);
 		setTimeout(() => {
 			setShowFailedAlert(false);
-		}, timeout);
+            setIsInsufficient(false);
+            setIsNegative(false)
+		}, timeoutError);
 		setIsSuccessful(false);
 	}
 	function handleSuccess() {
@@ -120,7 +124,7 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
     return (
 		<div>
 			<>  
-				{isSuccessful === false && (
+				{!isSuccessful && (
 					<div className="overlay">
 						<div className="modal" style={{ formStyle }}>
 
@@ -197,7 +201,7 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
 				)}
 
 				{showSuccessAlert && (
-					<AlertPopup alertType={"success"}>
+					<AlertPopup key={'success'} alertType={"success"}>
 						<AiFillCheckCircle className="alert--icon" />
 						<p>
 							{onUpdate(false)}
@@ -207,17 +211,18 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
 				)}
 
 				{showFailedAlert && (
-					<AlertPopup alertType={"error"}>
+					<AlertPopup key={'error'} alertType={"error"}>
 						<AiFillExclamationCircle className="alert--icon" />
 						<p>
 							{onUpdate(false)}
-							{isInsufficient ? `You don't have enough TAJI to buy ${numberConverter(slotAmount)} slots!` : isNegative ? 'You cannot buy slots of a negative value!' : 'Staking Failed!' }
+							{isNegative ? 'You cannot buy slots of a negative value!' :         isInsufficient ? `You don't have enough TAJI to buy ${numberConverter(slotAmount)} slots!` : 'Staking Failed!' }
 						</p>
 					</AlertPopup>
 				)}
 			</>
 		</div>
 	);
+
 }
 
 export default WalletStakingModal;

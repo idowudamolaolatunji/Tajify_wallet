@@ -15,7 +15,6 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 	const [statkingTransactions, setStatkingTransactions] = useState([]);
 
 	const userStakeSlots = statkingTransactions.reduce((acc, slot) => acc + slot.slots, 0);
-
     getSlots(userStakeSlots);
 
 	useEffect(() => {
