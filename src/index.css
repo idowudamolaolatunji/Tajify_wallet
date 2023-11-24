@@ -140,7 +140,12 @@ a:link {
   display: flex;
   align-items: center;
   gap: 8rem;
-
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: .2rem .6rem 4rem rgba(0, 0, 0, 0.1);
 }
 .logo__box {
     width: 8rem;

@@ -66,21 +66,21 @@ function index() {
                             <WalletInsightCard
 							insightIcon={<GiMoneyStack />} insightTitle={'Naira Balance'}
 							insightFigure={`₦${currencyConverter(user.nairaWalletBalance) || "0.00"}`}
-							pendingInsightTitle={'pending balance'}
-							pendingInsightFigure={'₦0.00'} />
+							pendingInsightTitle={'Pending Naira'}
+							pendingInsightFigure={`₦${currencyConverter(user?.pendingNairaBalance) || "0.00"}`} />
 
                             <WalletInsightCard
 							insightIcon={<GiCrownCoin />} insightTitle={'TAJI Balance'}
 							insightFigure={`TAJI ${currencyConverter(user.tajiWalletBalance) || "0.00"}`}
-							pendingInsightTitle={'pending balance'}
-							pendingInsightFigure={'TAJI 0.00'}/>
+							pendingInsightTitle={'Pending Taji'}
+							pendingInsightFigure={`TAJI ${currencyConverter(user?.pendingTajiBalance) || "0.00"}`}/>
 
                             <WalletInsightCard
 							insightIcon={<FaSackDollar  />}
 							insightTitle={'USDT Balance'}
-							insightFigure={`$${currencyConverter(user.usdtWalletBallance) || "0.00"}`}
-							pendingInsightTitle={'pending balance'}
-							pendingInsightFigure={'$0.00'} />
+							insightFigure={`$${currencyConverter(user?.usdtWalletBalance) || "0.00"}`}
+							pendingInsightTitle={'Pending usdt'}
+							pendingInsightFigure={`$${currencyConverter(user?.pendingUsdtBalance) || "0.00"}`} />
                         </div>
                             
                         <WalletActions onUpdate={onUpdate} userSlots={userSlots} />
