@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import TableRow from "./TableRow";
+// import TableRow from "./TableRow";
 
 import { useAuthContext } from "../context/AuthContext";
-import Spinner from "./Spinner";
+import DataTable from "react-data-table-component";
 import { currencyConverter, dateConverter } from "../utils/helper";
+import Spinner from "./Spinner";
+import { BiSolidSortAlt } from "react-icons/bi";
+
+const sortIcon = <BiSolidSortAlt />;
 
 function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 	const { token } = useAuthContext();
@@ -14,8 +18,59 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 	const [withdrawalTransactions, setWithdrawalTransactions] = useState([]);
 	const [statkingTransactions, setStatkingTransactions] = useState([]);
 
+	const columns = [
+		{
+			name: `${activeModalTab === "staking" ? "Trx Type" : "Currency Paid"}`,
+			selector: (row) => (activeModalTab === "staking" ? row.type : row.currency),
+			sortable: activeModalTab === "staking" ? false : true,
+		},
+		{
+			name: `${activeModalTab === "staking" ? "Paid TAJI" : "Amount"}`,
+			selector: (row) => (
+				`${
+					row.type === "staking"
+						? "TAJI "
+						: row.currency === "naira"
+						? "₦"
+						: row.currency === "taji"
+						? "TAJI "
+						: "$"
+				}${currencyConverter(row.amount)}`
+			),
+			sortable: true,
+		},
+		...(activeModalTab === "staking"
+			? [
+					{
+						name: "Slots Bought",
+						selector: (row) => row.slots,
+					},
+			  ]
+			: []),
+
+		{
+			name: "Transaction Status",
+			selector: (row) => row.status,
+			selector: (row) => (
+				<span className={`status status--${row.status === "pending" ? "pending" : "success"}`}>
+					<p>{row.status}</p>
+				</span>
+			),
+			sortable: true,
+		},
+		{
+			name: "Reference",
+			selector: (row) => row.reference,
+		},
+		{
+			name: "Date",
+			selector: (row) => dateConverter(row.createdAt),
+			sortable: true,
+		},
+	];
+
 	const userStakeSlots = statkingTransactions.reduce((acc, slot) => acc + slot.slots, 0);
-    getSlots(userStakeSlots);
+	getSlots(userStakeSlots);
 
 	useEffect(() => {
 		async function fetchTransactions() {
@@ -59,7 +114,35 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 		<>
 			{isLoading && <Spinner />}
 
-			<table>
+			{activeModalTab === "deposit" && (
+				<DataTable
+					columns={columns}
+					data={depositTransactions}
+					sortIcon={sortIcon}
+					pagination
+					selectableRows
+				/>
+			)}
+			{activeModalTab === "withdrawal" && (
+				<DataTable
+					columns={columns}
+					data={withdrawalTransactions}
+					sortIcon={sortIcon}
+					pagination
+					selectableRows
+				/>
+			)}
+			{activeModalTab === "staking" && (
+				<DataTable
+					columns={columns}
+					data={statkingTransactions}
+					sortIcon={sortIcon}
+					pagination
+					selectableRows
+				/>
+			)}
+
+			{/* <table>
 				<thead>
 					<tr>
 						<th>{activeModalTab === "staking" ? "Trx Type" : "Currency"}</th>
@@ -141,7 +224,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 							})}
 					</tbody>
 				)}
-			</table>
+			</table> */}
 		</>
 	);
 }

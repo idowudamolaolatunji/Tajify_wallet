@@ -414,20 +414,20 @@
 
 .status p {
     display: inline-block;
-    padding: 1rem 1.4rem;
-    border-radius: .8rem;
+    padding: .8rem 1.4rem;
+    border-radius: .6rem;
 }
 .status--pending p {
-    background-color: #ffe0cfe2;
+    background-color: #ffe0cfb7;
     color: #ff9248;
 }
 .status--error p {
-    background-color: #ffb09ce2;
+    background-color: #ffb09cb7;
     color: #ee2400;
 }
 .status--success p {
     color: #008001;
-    background-color: #d7ecd1e2;
+    background-color: #d7ecd1b7;
 }
 
 

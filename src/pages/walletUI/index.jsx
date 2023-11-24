@@ -12,10 +12,6 @@ import { GiCrownCoin, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi";
 import AvatarImg from '../../assets/imgs/pngs/avatar.png'
 
 import "./main.css";
-import "../../assets/css/table.css";
-
-// https://res.cloudinary.com/dy3bwvkeb/image/upload/v1700175346/jassir-jonis-QWa0TIUW638-unsplash_mupxsr.jpg
-
 
 function index() {
 	const { user, token, handleUser } = useAuthContext();

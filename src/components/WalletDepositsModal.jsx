@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import CurrencyInput from 'react-currency-input-field';
 import QRCode from "react-qr-code";
 
-import { PaystackButton, PaystackConsumer } from "react-paystack";
+import { PaystackButton } from "react-paystack";
 import { AiFillCheckCircle, AiFillExclamationCircle, AiOutlineClose } from "react-icons/ai";
-import { GiDialPadlock } from "react-icons/gi";
 import { MdContentCopy } from "react-icons/md";
 
 import AlertPopup from "./AlertPopup";
-import "../assets/css/custom.css";
 
 
 const timeout = 3500;

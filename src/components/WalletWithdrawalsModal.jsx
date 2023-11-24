@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState } from 'react'
 
 import CurrencyInput from 'react-currency-input-field';
 import { useAuthContext } from '../context/AuthContext';
@@ -6,7 +6,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { AiFillCheckCircle, AiFillExclamationCircle, AiOutlineClose } from "react-icons/ai";
 import AlertPopup from "./AlertPopup";
 import Spinner from './Spinner';
-import "../assets/css/custom.css";
+
 import { currencyConverter } from '../utils/helper';
 
 
