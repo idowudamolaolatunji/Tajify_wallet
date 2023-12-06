@@ -15,7 +15,9 @@
     padding: 2rem;
     border-radius: 1rem;
 }
-
+img {
+    object-fit: cover;
+}
 
 .wallet--profile {
     display: flex;

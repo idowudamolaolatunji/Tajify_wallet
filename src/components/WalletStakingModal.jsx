@@ -105,7 +105,7 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
                 return;
             }
             const data = await res.json();
-            if(data?.status) {
+            if(data?.status === 'success') {
                 setIsInsufficient(false)
                 setIsLoading(false);
                 onUpdate(true);
@@ -117,7 +117,7 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
             setIsLoading(false);
             handleFailure();
             return;
-        }
+        } 
     }
 
 
@@ -215,7 +215,7 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
 						<AiFillExclamationCircle className="alert--icon" />
 						<p>
 							{onUpdate(false)}
-							{isNegative ? 'You cannot buy slots of a negative value!' :         isInsufficient ? `You don't have enough TAJI to buy ${numberConverter(slotAmount)} slots!` : 'Staking Failed!' }
+							{isNegative ? 'You cannot buy slots of a negative value!' : isInsufficient ? `You don't have enough TAJI to buy ${numberConverter(slotAmount)} slots!` : 'Staking Failed!' }
 						</p>
 					</AlertPopup>
 				)}

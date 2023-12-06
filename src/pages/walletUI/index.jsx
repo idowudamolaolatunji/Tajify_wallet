@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { useAuthContext } from '../../context/AuthContext';
 import DashboardTable from "../../components/DashboardTable";
 import WalletActions from "../../components/WalletActions";
-import MainGreenHeader from "../../components/MainGreenHeader";
+import MainHeader from "../../components/MainHeader";
 import WalletInsightCard from "../../components/WalletInsightCard";
 import {currencyConverter} from '../../utils/helper';
 
@@ -48,13 +48,13 @@ function index() {
 
 	return (
 		<>
-			<MainGreenHeader />
+			<MainHeader />
 			<div className="dashboard__wallet section__container">
 
 				<div className="wallet__top">
 					<div className="wallet--profile">
 						<span className="wallet--profile-image">
-							<img src={user.image || AvatarImg} alt={user.image || AvatarImg} />
+							<img src={user?.image} alt={user.image} />
 						</span>
 						{/* <a href="https://tajify.com/profile" className="wallet--profile-btn"><FaUserPen style={{ fontSize: "1.6rem" }} /> My Profile</a> */}
 						<a href="https://tajify.com/profile" className="wallet--profile-btn"> My Profile</a>
@@ -65,22 +65,22 @@ function index() {
 							{console.log(user.nairaWalletBalance)}
                             <WalletInsightCard
 							insightIcon={<GiMoneyStack />} insightTitle={'Naira Balance'}
-							insightFigure={`₦${currencyConverter(user.nairaWalletBalance) || "0.00"}`}
+							insightFigure={`₦${currencyConverter(user?.nairaWalletBalance)}`}
 							pendingInsightTitle={'Pending Naira'}
-							pendingInsightFigure={`₦${currencyConverter(user?.pendingNairaBalance) || "0.00"}`} />
+							pendingInsightFigure={`₦${currencyConverter(user?.pendingNairaBalance)}`} />
 
                             <WalletInsightCard
 							insightIcon={<GiCrownCoin />} insightTitle={'TAJI Balance'}
-							insightFigure={`TAJI ${currencyConverter(user.tajiWalletBalance) || "0.00"}`}
+							insightFigure={`TAJI ${currencyConverter(user?.tajiWalletBalance)}`}
 							pendingInsightTitle={'Pending Taji'}
-							pendingInsightFigure={`TAJI ${currencyConverter(user?.pendingTajiBalance) || "0.00"}`}/>
+							pendingInsightFigure={`TAJI ${currencyConverter(user?.pendingTajiBalance)}`}/>
 
                             <WalletInsightCard
 							insightIcon={<FaSackDollar  />}
 							insightTitle={'USDT Balance'}
-							insightFigure={`$${currencyConverter(user?.usdtWalletBalance) || "0.00"}`}
+							insightFigure={`$${currencyConverter(user?.usdtWalletBalance)}`}
 							pendingInsightTitle={'Pending usdt'}
-							pendingInsightFigure={`$${currencyConverter(user?.pendingUsdtBalance) || "0.00"}`} />
+							pendingInsightFigure={`$${currencyConverter(user?.pendingUsdtBalance)}`} />
                         </div>
                             
                         <WalletActions onUpdate={onUpdate} userSlots={userSlots} />

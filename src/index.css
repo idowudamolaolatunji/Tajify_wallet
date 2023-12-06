@@ -133,7 +133,6 @@ a:link {
 /* NAV AND HEADER */
 .main-header {
   height: 9rem;
-  /* background-color: #008001; */
   background-color: #fff;
   width: 100%;
   padding: 0 2.8rem;
@@ -177,7 +176,6 @@ ul, li, ol {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* color: #fff; */
   color: #444;
   width: 100%;
 }
@@ -196,6 +194,9 @@ ul, li, ol {
   font-size: 1.2rem;
   font-weight: 500;
   transition: all .35s;
+}
+.navbar__item a:link, a:visited {
+  color: #444;
 }
 .navbar__item:hover, .navbar--others-icon:hover {
   color: #ff0066;

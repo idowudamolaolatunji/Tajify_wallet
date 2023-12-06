@@ -9,6 +9,13 @@ import Spinner from "./Spinner";
 import { BiSolidSortAlt } from "react-icons/bi";
 
 const sortIcon = <BiSolidSortAlt />;
+const customStyles = {
+    rows: {
+        style: {
+            minHeight: '58px',
+        },
+    },
+}
 
 function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 	const { token } = useAuthContext();
@@ -50,7 +57,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 
 		{
 			name: "Transaction Status",
-			selector: (row) => row.status,
+			// selector: (row) => row.status,
 			selector: (row) => (
 				<span className={`status status--${row.status === "pending" ? "pending" : "success"}`}>
 					<p>{row.status}</p>
@@ -71,6 +78,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 
 	const userStakeSlots = statkingTransactions.reduce((acc, slot) => acc + slot.slots, 0);
 	getSlots(userStakeSlots);
+	console.log(`token: ${token}`)
 
 	useEffect(() => {
 		async function fetchTransactions() {
@@ -86,7 +94,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 					fetch(`http://127.0.0.1:3005/api/transactions/stakings`, { headers }),
 				]);
 
-				if (!depositRes.ok || !withdrawalRes.ok) {
+				if (!depositRes.ok || !withdrawalRes.ok || !stakingRes.ok) {
 					setIsLoading(false);
 					return;
 				}
@@ -121,6 +129,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 					sortIcon={sortIcon}
 					pagination
 					selectableRows
+					customStyles={customStyles}
 				/>
 			)}
 			{activeModalTab === "withdrawal" && (
@@ -130,6 +139,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 					sortIcon={sortIcon}
 					pagination
 					selectableRows
+					customStyles={customStyles}
 				/>
 			)}
 			{activeModalTab === "staking" && (
@@ -139,6 +149,7 @@ function DashboardTable({ activeModalTab, isDataUpdated, getSlots }) {
 					sortIcon={sortIcon}
 					pagination
 					selectableRows
+					customStyles={customStyles}
 				/>
 			)}
 
