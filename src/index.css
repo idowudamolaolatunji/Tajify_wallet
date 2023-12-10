@@ -63,7 +63,7 @@ a:link {
 .section__container {
 	max-width: 120rem;
 	margin: 0 auto;
-	padding: 2.4rem;
+	padding: 2.8rem;
 }
 .component-card {
 	padding: 2rem;
@@ -118,6 +118,7 @@ a:link {
 /* scrollbar */
 ::-webkit-scrollbar {
 	width: 0.8rem;
+	height: 0.4rem;
 }
 ::-webkit-scrollbar-track {
 	background: #f1f1f1;
@@ -131,6 +132,10 @@ a:link {
 }
 
 /* NAV AND HEADER */
+.main-header.main-mobile {
+	display: none;
+	opacity: 0;
+}
 .main-header {
 	height: 9rem;
 	background-color: #fff;

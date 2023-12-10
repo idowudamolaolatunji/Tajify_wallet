@@ -45,7 +45,7 @@ function WalletActions({ onUpdate, userSlots }) {
 
 	return (
 		<>
-			<div className="wallet--cards-actions">
+			<div className="wallet--cards-actions" style={{ overflowX: 'auto' }}>
 				<div className="wallet--actions-item" onClick={toggleDepositModal}>
 					<span>
 						<RiLuggageDepositLine className="wallet--action-icon" />

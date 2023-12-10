@@ -1,0 +1,185 @@
+/* ================================== */
+/* WALLET MEDIA QUERY */
+/* ================================== */
+
+
+/* 1170rem === 117rem === 73.125em */
+@media screen and (max-width: 73.125em) {
+    html {
+        font-size: 61%;
+    }
+    .main-header {
+        gap: 6.2rem;
+    }
+    .navbar__list {
+        gap: 2.6rem;
+    }
+    
+    /* OTHERS */
+    .wallet--cards .insight {
+        padding: 1.4rem; 
+    }
+    
+}
+
+
+/* 1100px === 110rem === 68.75em */
+@media screen and (max-width: 68.75em) {
+    .main-header {
+        gap: 10rem;
+    }
+    .main-header .header__input {
+        display: none;
+    }
+    .logo__box img {
+        width: 6.2rem !important;
+        height: 100%;
+    } 
+}
+
+
+/* 1080px === 108rem === 67.5em */
+@media screen and (max-width: 67.5em) {
+    .wallet__top {
+        display: flex;
+    }
+    .wallet--profile {
+        display: none;
+    }
+}
+
+
+/* 970px === 97rem === 60.625em */
+@media screen and (max-width: 60.625em) {
+    html {
+        font-size: 56.25%;
+    }
+}
+
+
+/* 800px === 80rem === 50em */
+@media screen and (max-width: 50em) {
+    .main-header {
+        gap: 6rem;
+    }
+    .navbar--profile .profile-user {
+        display: none;
+    }
+
+    .insight--icon {
+        width: 5.2rem;
+        height: 5.2rem;
+        font-size: 2rem;
+    }
+    .wallet.insight:not(:last-child) .insight--icon {
+        font-size: 2.6rem;
+    }
+}
+
+
+/* 700px === 70rem === 43.75em */
+@media screen and (max-width: 43.75em) {
+    .main-header.main {
+        display: none;
+        opacity: 0;
+    }
+    .main-header.main-mobile {
+        display: flex;
+        opacity: 1;
+        gap: 0;
+        justify-content: space-between;
+    }
+    .navbar--others-icon {
+        font-size: 2.6rem;
+        color: #666;
+    }
+    .mobile-navbar__list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.8rem;
+        max-width: 30rem;
+        width: 30rem;
+        max-height: 49rem;
+        background-color: #fff;
+        padding: 2.4rem 3rem 3.4rem;
+        
+        position: absolute;
+        top: 9rem;
+        right: 0;
+    }
+    .mobile-navbar__list .navbar__item {
+        flex-direction: row;
+        gap: 1.6rem;
+        align-items: center;
+        font-weight: 500;
+        color: #555;
+        font-size: 1.4rem;
+    }
+
+    /* OTHERS */
+
+    .admin__insight {
+        grid-template-columns: 1fr 1fr;
+    }
+    .wallet--cards.wallet {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+
+/* 530px === 53rem === 33.125em */
+@media screen and (max-width: 32.125em) {
+    .admin__insight {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .wallet--cards .insight {
+        grid-template-columns: 6rem 1fr;
+    }
+    .wallet__top {
+        overflow: hidden;
+    }
+    .wallet--cards-actions {
+        overflow: auto !important;
+        gap: .8rem
+    }
+    .wallet--actions-item {
+        font-size: 1.2rem;
+    }
+    .wallet--action-icon {
+        font-size: 1.8rem;
+    }
+
+    .modal {
+        width: 90% !important;
+        max-height: 38rem !important;
+        overflow: auto;
+    }
+    .wallet--tabs.tabs--modal {
+        padding: 0;
+        background-color: transparent;
+    }
+}
+
+
+/* 450px === 45rem === 28.125em */
+@media screen and (max-width: 28.125em) {
+    .navbar--others {
+        gap: 1.4rem;
+    }
+    .mobile-navbar__list .navbar__item {
+        font-size: 1.2rem;
+    }
+    .wallet--cards-actions {
+        flex-wrap: wrap;
+    }
+    .form--insights {
+        display: flex;
+        flex-direction: column;
+    }
+    .alert {
+        width: 85%;
+    }
+}

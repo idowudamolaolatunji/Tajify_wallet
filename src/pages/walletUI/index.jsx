@@ -53,13 +53,12 @@ function index() {
 						<span className="wallet--profile-image">
 							<img src={user?.image} alt={user.image} />
 						</span>
-						{/* <a href="https://tajify.com/profile" className="wallet--profile-btn"><FaUserPen style={{ fontSize: "1.6rem" }} /> My Profile</a> */}
 						<a href="https://tajify.com/profile" className="wallet--profile-btn"> My Profile</a>
 					</div>
 
 					<div className="wallet--cards wallet">
                         <div className='admin__insight'>
-							{console.log(user.nairaWalletBalance)}
+							
                             <WalletInsightCard
 							insightIcon={<GiMoneyStack />} insightTitle={'Naira Balance'}
 							insightFigure={`₦${numberConverter(user?.nairaWalletBalance)}`}
@@ -90,9 +89,7 @@ function index() {
 
 						<div className="wallet--tabs">
 							<span className={`wallet--tab ${activeModalTab === "deposit" && "tab--active"}`} onClick={() => { setActiveModalTab("deposit")}}>Deposit</span>
-
 							<span className={`wallet--tab ${activeModalTab === "withdrawal" && "tab--active"}`} onClick={() => { setActiveModalTab("withdrawal")}}>Withdrawal</span>
-							
 							<span className={`wallet--tab ${activeModalTab === "staking" && "tab--active"}`} onClick={() => { setActiveModalTab("staking")}}>Staking</span>
 						</div>
 
