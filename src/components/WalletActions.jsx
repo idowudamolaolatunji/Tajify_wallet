@@ -1,49 +1,46 @@
 import React, { useState } from "react";
 
-// import WalletTabModal from "./WalletTabModal";
-{
-	/* {modalDeposit && <WalletTabModal />} */
-}
-
 import { RiLuggageDepositLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import { LuWorkflow } from "react-icons/lu";
-// import { GrRisk } from "react-icons/gr";
-// import { GiProfit } from "react-icons/gi";
 import WalletDepositsModal from "./WalletDepositsModal";
 import WalletWithdrawalsModal from "./WalletWithdrawalsModal";
 import WalletStakingModal from "./WalletStakingModal";
+import WalletConvertModal from "./WalletConvertModal";
 
 function WalletActions({ onUpdate, userSlots }) {
-	const [modalDeposit, setModalDeposit] = useState(false);
-	const [modalWithdrawal, setModalWithdrawal] = useState(false);
-	const [modalConvert, setModalConvert] = useState(false);
-	const [modalStaking, setModalStaking] = useState(false);
+	const [modalDeposit, setShowModalDeposit] = useState(false);
+	const [modalWithdrawal, setShowModalWithdrawal] = useState(false);
+	const [modalConvert, setShowModalConvert] = useState(false);
+	const [modalStaking, setShowModalStaking] = useState(false);
 
 	// HANDLE TOGGLE/OPEN FUNTIONS
 	function toggleDepositModal() {
-		setModalDeposit(true);
+		setShowModalDeposit(true);
 	}
 	function toggleWithdrawalModal() {
-		setModalWithdrawal(true);
+		setShowModalWithdrawal(true);
 	}
 	function toggleConvertModal() {
-		setModalConvert(true);
+		setShowModalConvert(true);
 	}
 	function toggleStakingModal() {
-		setModalStaking(true);
+		setShowModalStaking(true);
 	}
 
 	// HANDLE CLOSE FUNCTIONS
 	function handleDepositModalClose() {
-		setModalDeposit(false);
+		setShowModalDeposit(false);
 	}
 	function handleWithdrawalModalClose() {
-		setModalWithdrawal(false);
+		setShowModalWithdrawal(false);
+	}
+	function handleConvertModalClose() {
+		setShowModalConvert(false);
 	}
 	function handleStakingModalClose() {
-		setModalStaking(false);
+		setShowModalStaking(false);
 	}
 
 	return (
@@ -83,6 +80,7 @@ function WalletActions({ onUpdate, userSlots }) {
 					key={"deposit"}
 					onUpdate={onUpdate}
 					handleClose={handleDepositModalClose}
+					setShowModalDeposit={setShowModalDeposit}
 				/>
 			)}
 			{modalWithdrawal && (
@@ -90,15 +88,24 @@ function WalletActions({ onUpdate, userSlots }) {
 					key={"withdrawal"}
 					onUpdate={onUpdate}
 					handleClose={handleWithdrawalModalClose}
+					setShowModalWithdrawal={setShowModalWithdrawal}
 				/>
 			)}
-			{/* {modalConvert && <WalletConvertModal onUpdate={onUpdate} handleClose={'-'} />} */}
+			{modalConvert && (
+				<WalletConvertModal
+					key={"convert"}
+					onUpdate={onUpdate}
+					handleClose={handleConvertModalClose}
+					setShowModalConvert={setShowModalConvert}
+				/>
+			)}
 			{modalStaking && (
 				<WalletStakingModal
 					key={"staking"}
 					onUpdate={onUpdate}
 					userSlots={userSlots}
 					handleClose={handleStakingModalClose}
+					setShowModalStaking={setShowModalStaking}
 				/>
 			)}
 		</>

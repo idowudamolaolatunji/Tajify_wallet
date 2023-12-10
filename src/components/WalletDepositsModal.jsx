@@ -29,19 +29,18 @@ import Spinner from "./Spinner";
 import { useAuthContext } from "../context/AuthContext";
 
 
-function WalletPaymentModal({ onUpdate, handleClose }) {
-    const { token } = useAuthContext();
+function WalletPaymentModal({ onUpdate, handleClose, setShowModalDeposit }) {
+    const { user, token } = useAuthContext();
     const [isLoading, setIsLoading] = useState(false)
     
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [showCopiedAlert, setShowCopiedAlert] = useState(false)
     const [showFailedAlert, setShowFailedAlert] = useState(false);
-    const [isSuccessful, setIsSuccessful] = useState(false);
     const [statusCode, setStatusCode] = useState('');
 
     const publicKey = "pk_test_8fa5be5a113286b23f7775fe7f34c94ffd338c8c"
     const [fullName , setFullName] = useState('')
-    const [email , setEmail] = useState('')
+    const [email , setEmail] = useState(user?.email)
     const [amount , setAmount] = useState('')
     const [hashKey, setHashKey] = useState('');
     const [tajiAmount, setTajiAmount] = useState('');
@@ -83,7 +82,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
         setTimeout(() => {
             setShowFailedAlert(false);
         }, timeout);
-        setIsSuccessful(false)
+        setShowModalDeposit(true)
     }
 
     function handleSuccess() {
@@ -91,13 +90,14 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
         setTimeout(() => {
             setShowSuccessAlert(false);
         }, timeout);
-        setIsSuccessful(true)
+        setShowModalDeposit(false)
     }
 
 
     async function handleNairaDeposit(reference) {
         try {
-            setIsLoading(true)
+            setIsLoading(true);
+
             const res = await fetch(`http://127.0.0.1:3005/api/wallets/payment-verification/${reference}/${charges}`, {
                 method: 'GET',
                 headers: {
@@ -117,7 +117,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                 onUpdate(true);
                 handleSuccess();
             }
-            setIsSuccessful(true);
+            setShowModalDeposit(false);
         } catch(err) {
             setIsLoading(false);
             handleFailure();
@@ -155,7 +155,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                 onUpdate(true);
                 handleSuccess();
             }
-            setIsSuccessful(true);
+            setShowModalDeposit(false);
         } catch(err) {
             setIsLoading(false);
             handleFailure();
@@ -165,7 +165,7 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
 
 	return (
         <>
-            {isSuccessful === false && (
+            
                 <div className="overlay">
                     <div className="modal">
                         <span className="modal--head">
@@ -208,8 +208,9 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                                             className="form__input"
                                             type="email"
                                             id="email"
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            // onChange={(e) => setEmail(e.target.value)}
                                             value={email}
+                                            readOnly
                                             required
                                             placeholder="Your Email Address"
                                         />
@@ -298,17 +299,66 @@ function WalletPaymentModal({ onUpdate, handleClose }) {
                             )}
 
                             {activeModalTab === "usdt" && (
-                                <p>Coming Soon..</p>
+                                // <form className="payment--form" onSubmit={handleUsdtDeposit}>
+                                <form className="payment--form">
+
+                                    <div className="form__item">
+                                        <label className="form__label" htmlFor="usdt-amount">
+                                            USDT amount
+                                        </label>
+                                        <CurrencyInput
+                                            id="usdt-amount"
+                                            required
+                                            className="form__input"
+                                            placeholder="Enter USDT Amount"
+                                            defaultValue={amount}
+                                            value={amount}
+                                            decimalsLimit={2}
+                                            prefix='$  '
+                                            onValueChange={(value, _) => setAmount(value)}
+                                        />
+                                    </div>
+
+                                    <div className="form__item">
+                                        <label className="form__label" htmlFor="name">
+                                            USDT Wallet Address / QR Code
+                                        </label>
+                                        <span className="copy-input-box" >
+                                            <input className="form__input" value={'1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71'} style={{ backgroundColor: '#eee'}} readOnly />
+
+                                            <MdContentCopy className="copy-input-icon" onClick={copyInput} />
+                                        </span>
+                                    </div>
+
+
+                                    <div className="form__item form__qr">
+                                        <QRCode
+                                        value={'1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71'}
+                                        />
+                                    </div>
+                                    
+                                    <div className="form__item">
+                                        <label className="form__label" htmlFor="hash">Transaction HASH</label>
+                                        <input className="form__input" required type="text" value={hashKey} onChange={(e) => setHashKey(e.target.value)} placeholder="Enter Transaction Hash" />
+                                    </div>
+
+                                    
+                                    <div className="form__item">
+                                        <button className="form__submit" type="submit">
+                                            Submit Proof
+                                        </button>
+                                    </div>
+                                </form>
                             )}
                         </div>
                     </div>
                 </div>
-            )}
+            
 
             {showCopiedAlert && (
                 <AlertPopup alertType={"success"}>
                     <AiFillCheckCircle className="alert--icon" />
-                    <p>Copied Successfully!</p>
+                    <p>Copied Wallet Address!</p>
                 </AlertPopup>
             )}
 

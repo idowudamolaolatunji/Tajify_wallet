@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { LuHome } from "react-icons/lu";
 import { PiNotePencilFill } from "react-icons/pi";
@@ -6,16 +6,20 @@ import { MdConnectedTv } from "react-icons/md";
 import { BiNetworkChart } from "react-icons/bi";
 import { GiShoppingBag } from "react-icons/gi";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BsFillGridFill, BsFillBellFill, BsChevronDown } from "react-icons/bs";
-// import LogoImg from '../assets/imgs/pngs/TAJIFY-LOGO.png';
+import { BsFillGridFill, BsFillBellFill, BsChevronDown, BsChevronUp } from "react-icons/bs";
+
+import DropdownMenu from "./DropdownMenu";
 import LogoImg from "../assets/imgs/pngs/logo-complete.png";
-import AvatarImg from "../assets/imgs/pngs/avatar.png";
 
 import { useAuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
 
 function MainHeader() {
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const { user } = useAuthContext();
+
+	const toggleDropdown = () => {
+		setIsDropdownOpen(!isDropdownOpen);
+	};
 
 	return (
 		<header className="main-header">
@@ -68,7 +72,7 @@ function MainHeader() {
                     </a>
 
                     <a href="https://tajify.com/coming-soon">
-                        <li className="navbar__item">
+                        <li className="navbar__item nav-active">
                             <BsFillGridFill className="navbar--icon" />
                             More
                         </li>
@@ -90,11 +94,16 @@ function MainHeader() {
 							<span className="navbar--profile">
 								<img
 									className="navbar--profile-img"
-									src={user?.image || AvatarImg}
-									alt={user?.image || AvatarImg}
+									src={user?.image}
+									alt={user?.image}
 								/>
 								<p>{user?.fullName || user?.username}</p>
-								<BsChevronDown />
+								
+
+								{isDropdownOpen ?  <BsChevronUp style={{color: "#ff0066"}} onClick={toggleDropdown} /> : <BsChevronDown onClick={toggleDropdown} />}
+								{isDropdownOpen && (
+								<DropdownMenu toggleDropdown={toggleDropdown} />
+								)}
 							</span>
 						</>
 					)}
@@ -105,3 +114,4 @@ function MainHeader() {
 }
 
 export default MainHeader;
+

@@ -12,196 +12,193 @@ import Spinner from "./Spinner";
 import { useAuthContext } from "../context/AuthContext";
 import { currencyConverter, numberConverter } from "../utils/helper";
 
-
 const formStyle = {
 	width: "50rem",
-    height: 'auto',
+	height: "auto",
 };
 
-const timeout = 3000
+const timeout = 3000;
 const timeoutError = 2500;
 
 const slotPrice = 20000;
 
-function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
+function WalletStakingModal({ onUpdate, handleClose, userSlots, setShowModalStaking }) {
 	const { user, token } = useAuthContext();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 	const [showFailedAlert, setShowFailedAlert] = useState(false);
-	const [isSuccessful, setIsSuccessful] = useState(false);
-    const [errorBorder, setErrorBorder] = useState(false);
-    const [isInsufficient, setIsInsufficient] = useState(false);
-    const [isNegative, setIsNegative] = useState(false);
+	const [errorBorder, setErrorBorder] = useState(false);
+	const [isInsufficient, setIsInsufficient] = useState(false);
+	const [isNegative, setIsNegative] = useState(false);
 
-	const [slotAmount, setSlotAmount] = useState('');
-    const totalAmount = Number(slotAmount * slotPrice);
-    const transactionFee = Number(totalAmount * 0.005);
-    const finalTotal = totalAmount + transactionFee;
-    const userCurrentBalance = user.tajiWalletBalance;
-    //////////////////////////////////////////////////
+	const [slotAmount, setSlotAmount] = useState("");
+	const totalAmount = Number(slotAmount * slotPrice);
+	const transactionFee = Number(totalAmount * 0.005);
+	const finalTotal = totalAmount + transactionFee;
+	const userCurrentBalance = user.tajiWalletBalance;
+	//////////////////////////////////////////////////
 
-    function handleCloseModal() {
+	function handleCloseModal() {
 		handleClose();
 	}
 	function handleFailure() {
 		setShowFailedAlert(true);
 		setTimeout(() => {
 			setShowFailedAlert(false);
-            setIsInsufficient(false);
-            setIsNegative(false)
+			setIsInsufficient(false);
+			setIsNegative(false);
 		}, timeoutError);
-		setIsSuccessful(false);
+		setShowModalStaking(true);
 	}
 	function handleSuccess() {
 		setShowSuccessAlert(true);
 		setTimeout(() => {
 			setShowSuccessAlert(false);
 		}, timeout);
-		setIsSuccessful(true);
+		setShowModalStaking(false);
 	}
 
-    function handleErrorBorder() {
-        setErrorBorder(true);
-        setTimeout(() => {
-            setErrorBorder(false);
-        }, timeout);
-    }
+	function handleErrorBorder() {
+		setErrorBorder(true);
+		setTimeout(() => {
+			setErrorBorder(false);
+		}, timeout);
+	}
 
-    async function handleStaking(e) {
-        try {
-            e.preventDefault();
-            setIsLoading(false);
-            if(slotAmount < 1) {
-                handleFailure();
-                setIsLoading(false);
-                setIsNegative(true);
-                return;
-            }
-            if(userCurrentBalance < finalTotal) {
-                handleFailure();
-                handleErrorBorder();
-                setIsLoading(false);
-                setIsInsufficient(true);
-                return;
-            }
-            setIsLoading(true);
+	async function handleStaking(e) {
+		try {
+			e.preventDefault();
+			setIsLoading(false);
+			if (slotAmount < 1) {
+				handleFailure();
+				setIsLoading(false);
+				setIsNegative(true);
+				return;
+			}
+			if (userCurrentBalance < finalTotal) {
+				handleFailure();
+				handleErrorBorder();
+				setIsLoading(false);
+				setIsInsufficient(true);
+				return;
+			}
+			setIsLoading(true);
 
-            const res = await fetch("http://127.0.0.1:3005/api/stakings/stakeholder-staking", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    stakeHolderUsername: user.username,
-                    slotAmount,
-                })
-            });
-        
-            if(!res.ok) {
-                setIsLoading(false);
-                handleFailure();
-                return;
-            }
-            const data = await res.json();
-            if(data?.status === 'success') {
-                setIsInsufficient(false)
-                setIsLoading(false);
-                onUpdate(true);
-                handleSuccess();
-                return;
-            }
-            setIsSuccessful();
-        } catch(err) {
-            setIsLoading(false);
-            handleFailure();
-            return;
-        } 
-    }
+			const res = await fetch("http://127.0.0.1:3005/api/stakings/stakeholder-staking", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					stakeHolderUsername: user.username,
+					slotAmount,
+				}),
+			});
 
+			if (!res.ok) {
+				setIsLoading(false);
+				handleFailure();
+				return;
+			}
+			const data = await res.json();
+			if (data?.status === "success") {
+				setIsInsufficient(false);
+				setIsLoading(false);
+				onUpdate(true);
+				handleSuccess();
+				return;
+			}
+		} catch (err) {
+			setIsLoading(false);
+			handleFailure();
+			return;
+		}
+	}
 
-    return (
+	return (
 		<div>
-			<>  
-				{!isSuccessful && (
-					<div className="overlay">
-						<div className="modal" style={{ formStyle }}>
+			<>
+				<div className="overlay">
+					<div className="modal" style={{ formStyle }}>
+						<span className="modal--head">
+							<p className="payment--heading">Liquidity Pool Staking</p>
+							<AiOutlineClose className="modal--icon" onClick={handleCloseModal} />
+						</span>
 
-							<span className="modal--head">
-                                <p className="payment--heading">Liquidity Pool Staking</p>
-								<AiOutlineClose className="modal--icon" onClick={handleCloseModal}/>
-							</span>
+						<div className="modal__content">
+							{isLoading && <Spinner />}
 
-							<div className="modal__content">
-								{isLoading && <Spinner />}
+							<form className="payment--form" onSubmit={handleStaking}>
+								<div className="form--insights">
+									<span
+										className={`form--insight ${
+											errorBorder ? "invalid-task" : ""
+										}`}
+									>
+										<span className="form--insight-icon">
+											<GiCrownCoin className="form-icon" />
+										</span>
 
-                                <form className="payment--form" onSubmit={handleStaking}>
-                                    <div className="form--insights">
-                                        <span className={`form--insight ${errorBorder ? 'invalid-task' : ''}`}>
-                                            <span className="form--insight-icon">
-                                                <GiCrownCoin className="form-icon"/>
-                                            </span>
+										<span className="form--insight-content">
+											<p>Current TAJI Balance</p>
+											<p>TAJI {numberConverter(user.tajiWalletBalance)}</p>
+										</span>
+									</span>
 
-                                            <span className="form--insight-content">
-                                                <p>Current TAJI Balance</p>
-                                                <p>TAJI {numberConverter(user.tajiWalletBalance)}</p>
-                                            </span>
-                                            
-                                        </span>
+									<span className="form--insight">
+										<span className="form--insight-icon">
+											<FaCubesStacked className="form-icon" />
+										</span>
 
-                                        <span className="form--insight">
-                                            <span className="form--insight-icon">
-                                                <FaCubesStacked className="form-icon"/>
-                                            </span>
+										<span className="form--insight-content">
+											<p>Already Bought Slots</p>
+											<p>{userSlots} Slots</p>
+										</span>
+									</span>
+								</div>
 
-                                            <span className="form--insight-content">
-                                                <p>Already Bought Slots</p>
-                                                <p>{userSlots} Slots</p>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    
-                                    <div className="form__item">
-                                        <label className="form__label" htmlFor="amount">
-                                            Slots Amount 
-                                        </label>
+								<div className="form__item">
+									<label className="form__label" htmlFor="amount">
+										Slots Amount
+									</label>
 
-                                        <CurrencyInput
-                                            id="amount"
-                                            className="form__input"
-                                            placeholder="Amount of Slots"
-                                            defaultValue={slotAmount}
-                                            value={slotAmount}
-                                            required
-                                            suffix=" Slots"
-                                            onValueChange={(value, _) => setSlotAmount(value)}
-                                        />
+									<CurrencyInput
+										id="amount"
+										className="form__input"
+										placeholder="Amount of Slots"
+										defaultValue={slotAmount}
+										value={slotAmount}
+										required
+										suffix=" Slots"
+										onValueChange={(value, _) => setSlotAmount(value)}
+									/>
 
-                                        <span className="form--total">
-                                            Price:<p>TAJI {numberConverter(totalAmount || 0)}</p>
-                                        </span>
+									<span className="form--total">
+										Price:<p>TAJI {numberConverter(totalAmount || 0)}</p>
+									</span>
+								</div>
 
-                                    </div>
+								<div className="form__item">
+									<span className="form--dotted">
+										<p className="dotted--title">Gas Fee.</p>
+										<p className="dotted--detail">
+											TAJI {numberConverter(transactionFee || 0)}
+										</p>
+									</span>
+								</div>
 
-                                    <div className="form__item">
-                                        <span className="form--dotted">
-                                            <p className="dotted--title">Transaction Fee.</p>
-                                            <p className="dotted--detail">TAJI {numberConverter(transactionFee || 0)}</p>
-                                        </span>
-                                    </div>
-
-                                    <div className="form__item">
-                                        <button className="form__submit">Stake Now</button>
-                                    </div>
-                                </form>
-							</div>
+								<div className="form__item">
+									<button className="form__submit">Stake Now</button>
+								</div>
+							</form>
 						</div>
 					</div>
-				)}
+				</div>
 
 				{showSuccessAlert && (
-					<AlertPopup key={'success'} alertType={"success"}>
+					<AlertPopup key={"success"} alertType={"success"}>
 						<AiFillCheckCircle className="alert--icon" />
 						<p>
 							{onUpdate(false)}
@@ -211,18 +208,23 @@ function WalletStakingModal({ onUpdate, handleClose, userSlots }) {
 				)}
 
 				{showFailedAlert && (
-					<AlertPopup key={'error'} alertType={"error"}>
+					<AlertPopup key={"error"} alertType={"error"}>
 						<AiFillExclamationCircle className="alert--icon" />
 						<p>
 							{onUpdate(false)}
-							{isNegative ? 'You cannot buy slots of a negative value!' : isInsufficient ? `You don't have enough TAJI to buy ${numberConverter(slotAmount)} slots!` : 'Staking Failed!' }
+							{isNegative
+								? "You cannot buy slots of a negative value!"
+								: isInsufficient
+								? `You don't have enough TAJI to buy ${numberConverter(
+										slotAmount,
+								  )} slots!`
+								: "Staking Failed!"}
 						</p>
 					</AlertPopup>
 				)}
 			</>
 		</div>
 	);
-
 }
 
 export default WalletStakingModal;

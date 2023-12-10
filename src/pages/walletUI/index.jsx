@@ -5,16 +5,14 @@ import DashboardTable from "../../components/DashboardTable";
 import WalletActions from "../../components/WalletActions";
 import MainHeader from "../../components/MainHeader";
 import WalletInsightCard from "../../components/WalletInsightCard";
-import {currencyConverter} from '../../utils/helper';
+import { numberConverter } from '../../utils/helper';
 
 import { FaSackDollar, FaUserPen } from "react-icons/fa6";
 import { GiCrownCoin, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi";
-import AvatarImg from '../../assets/imgs/pngs/avatar.png'
-
 import "./main.css";
 
 function index() {
-	const { user, token, handleUser } = useAuthContext();
+	const { user, token, handleUser, handleRefetchHelp } = useAuthContext();
     const [activeModalTab, setActiveModalTab] = useState('deposit');
 	const [isDataUpdated, setIsDataUpdated] = useState(false);
 	const [userSlots, setUserSlots] = useState([])
@@ -36,7 +34,6 @@ function index() {
                 		Authorization: `Bearer ${token}`
 					}
 				});
-
 				const data = await res.json();
 				handleUser(data.data.user);
 			} catch(err) {
@@ -65,22 +62,22 @@ function index() {
 							{console.log(user.nairaWalletBalance)}
                             <WalletInsightCard
 							insightIcon={<GiMoneyStack />} insightTitle={'Naira Balance'}
-							insightFigure={`₦${currencyConverter(user?.nairaWalletBalance)}`}
+							insightFigure={`₦${numberConverter(user?.nairaWalletBalance)}`}
 							pendingInsightTitle={'Pending Naira'}
-							pendingInsightFigure={`₦${currencyConverter(user?.pendingNairaBalance)}`} />
+							pendingInsightFigure={`₦${numberConverter(user?.pendingNairaBalance)}`} />
 
                             <WalletInsightCard
 							insightIcon={<GiCrownCoin />} insightTitle={'TAJI Balance'}
-							insightFigure={`TAJI ${currencyConverter(user?.tajiWalletBalance)}`}
+							insightFigure={`TAJI ${numberConverter(user?.tajiWalletBalance)}`}
 							pendingInsightTitle={'Pending Taji'}
-							pendingInsightFigure={`TAJI ${currencyConverter(user?.pendingTajiBalance)}`}/>
+							pendingInsightFigure={`TAJI ${numberConverter(user?.pendingTajiBalance)}`}/>
 
                             <WalletInsightCard
 							insightIcon={<FaSackDollar  />}
 							insightTitle={'USDT Balance'}
-							insightFigure={`$${currencyConverter(user?.usdtWalletBalance)}`}
+							insightFigure={`$${numberConverter(user?.usdtWalletBalance)}`}
 							pendingInsightTitle={'Pending usdt'}
-							pendingInsightFigure={`$${currencyConverter(user?.pendingUsdtBalance)}`} />
+							pendingInsightFigure={`$${numberConverter(user?.pendingUsdtBalance)}`} />
                         </div>
                             
                         <WalletActions onUpdate={onUpdate} userSlots={userSlots} />

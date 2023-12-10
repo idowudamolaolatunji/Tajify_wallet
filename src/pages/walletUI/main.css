@@ -224,8 +224,8 @@ img {
     margin: 0 auto;
 }
 .form__label {
-    font-size: 1.3rem;
-    color: #333;
+    font-size: 1.2rem;
+    color: #555;
     font-weight: 600;
 }
 .copy-input-box {
@@ -252,6 +252,11 @@ img {
     color: #777;
     box-shadow: 0 0 3rem rgba(0, 0, 0, .1);
 }
+.form__flex {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
 .form__input {
     border: 1.2px solid #eee;
     outline: none;
@@ -260,6 +265,7 @@ img {
     width: 100%;
     font-size: 1.6rem;
     transition: all .35s;
+    color: #444;
 }
 .form__input:hover {
     border: 1px solid #008001;
@@ -486,6 +492,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1.4rem;
 }
 .form-icon {
     font-size: 2rem;
@@ -510,6 +517,7 @@ img {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    text-align: end;
     gap: 1rem;
     color: #444;
 }
