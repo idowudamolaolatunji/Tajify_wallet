@@ -170,7 +170,8 @@
         gap: 1.4rem;
     }
     .mobile-navbar__list .navbar__item {
-        font-size: 1.2rem;
+		font-size: 1.46rem;
+		font-weight: 400;
     }
     .wallet--cards-actions {
         flex-wrap: wrap;
